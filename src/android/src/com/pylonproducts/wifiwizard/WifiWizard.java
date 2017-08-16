@@ -23,6 +23,7 @@ import org.json.JSONObject;
 
 import android.net.NetworkInfo;
 import android.net.wifi.WifiManager;
+import android.net.wifi.WifiManager.MulticastLock;
 import android.net.wifi.WifiConfiguration;
 import android.net.wifi.WifiEnterpriseConfig;
 import android.net.wifi.ScanResult;
@@ -54,6 +55,11 @@ public class WifiWizard extends CordovaPlugin {
     public void initialize(CordovaInterface cordova, CordovaWebView webView) {
         super.initialize(cordova, webView);
         this.wifiManager = (WifiManager) cordova.getActivity().getSystemService(Context.WIFI_SERVICE);
+
+        MulticastLock multicastLock = wifiManager.createMulticastLock("multicastLock");
+        multicastLock.setReferenceCounted(true);
+        multicastLock.acquire();
+
     }
 
     @Override
