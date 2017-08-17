@@ -130,7 +130,7 @@ public class WifiWizard extends CordovaPlugin {
         } else if (action.equals(SET_MULTICAST_LOCK)) {
             String lockName = data.getString(0);
             boolean enabled = data.getBoolean(1);
-            return this.setMulticastLock(callbackContext,lockName, enable);
+            return this.setMulticastLock(callbackContext,lockName, enabled);
         } else {
             callbackContext.error("Incorrect action parameter: " + action);
         }
