@@ -292,13 +292,14 @@ var WifiWizard = {
     },
     
      /**
-     *  Gets '1' if WiFi is enabled
-     * @param   enabled	callback function
-     * @param 	win	callback function
-     * @param 	fail	callback function if wifi is disabled
+     *  Enable/Disable Multicast
+     * @param   lockName 	
+     * @param   enable 	
+     * @param 	win	    callback function
+     * @param 	fail	callback function
      */
     setMulticastLock: function(lockName, enable, win, fail) {
-        cordova.exec(win, fail, 'setMulticastLock', [lockName, enable]);
+        cordova.exec(win, fail, 'WifiWizard', 'setMulticastLock', [lockName, enable]);
     }
 };
 
