@@ -297,7 +297,7 @@ var WifiWizard = {
      * @param 	win	callback function
      * @param 	fail	callback function if wifi is disabled
      */
-    setMulticastLock: function(lockName, enable, win, fail, ) {
+    setMulticastLock: function(lockName, enable, win, fail) {
         cordova.exec(win, fail, 'setMulticastLock', [lockName, enable]);
     }
 };
