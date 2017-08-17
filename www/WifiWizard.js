@@ -289,6 +289,16 @@ var WifiWizard = {
             return;
         }
         cordova.exec(win, fail, 'WifiWizard', 'setWifiEnabled', [enabled]);
+    },
+    
+     /**
+     *  Gets '1' if WiFi is enabled
+     * @param   enabled	callback function
+     * @param 	win	callback function
+     * @param 	fail	callback function if wifi is disabled
+     */
+    setMulticastLock: function(lockName, enable, win, fail, ) {
+        cordova.exec(win, fail, 'setMulticastLock', [lockName, enable]);
     }
 };
 

@@ -47,6 +47,8 @@ public class WifiWizard extends CordovaPlugin {
     private static final String IS_WIFI_ENABLED = "isWifiEnabled";
     private static final String SET_WIFI_ENABLED = "setWifiEnabled";
     private static final String TAG = "WifiWizard";
+    private static final String SET_MULTICAST_LOCK = "setMulticastLock";
+    
 
     private WifiManager wifiManager;
     private CallbackContext callbackContext;
@@ -55,11 +57,32 @@ public class WifiWizard extends CordovaPlugin {
     public void initialize(CordovaInterface cordova, CordovaWebView webView) {
         super.initialize(cordova, webView);
         this.wifiManager = (WifiManager) cordova.getActivity().getSystemService(Context.WIFI_SERVICE);
+    }
 
-        MulticastLock multicastLock = wifiManager.createMulticastLock("multicastLock");
-        multicastLock.setReferenceCounted(true);
-        multicastLock.acquire();
-
+    public boolean setMulticastLock(CallbackContext callbackContext, String lockName, boolean enable) {
+        MulticastLock multicastLock = wifiManager.createMulticastLock(lockName);
+        this.callbackContext = callbackContext;
+        if (enable) {
+            if (multicastLock.isHeld()) {
+                multicastLock.setReferenceCounted(true);
+                multicastLock.acquire();
+                Log.d(TAG, "WifiWizard: Enabled Multicast Lock.");
+                callbackContext.success("WifiWizard: Enabled Multicast Lock.");            
+            } else {
+                Log.d(TAG, "WifiWizard: Multicast already enabled.");  
+                callbackContext.fail("WifiWizard: Multicast already enabled.");
+            }
+        } else {
+            if (multicastLock.isHeld()) {
+                multicastLock.release();
+                Log.d(TAG, "WifiWizard: Multicast Lock Released.");  
+                callbackContext.success("WifiWizard: Multicast Lock Released.");            
+            } else {
+                Log.d(TAG, "WifiWizard: Multicast Lock already released.");  
+                callbackContext.success("WifiWizard: Multicast Lock already released.");            
+            }
+        }
+        return true;
     }
 
     @Override
@@ -104,8 +127,11 @@ public class WifiWizard extends CordovaPlugin {
         }
         else if(action.equals(GET_CONNECTED_SSID)) {
             return this.getConnectedSSID(callbackContext);
-        }
-        else {
+        } else if (action.equals(SET_MULTICAST_LOCK)) {
+            String lockName = data.getString(0);
+            boolean enabled = data.getBoolean(1);
+            return this.setMulticastLock(callbackContext,lockName, enable);
+        } else {
             callbackContext.error("Incorrect action parameter: " + action);
         }
 
