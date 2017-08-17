@@ -70,7 +70,7 @@ public class WifiWizard extends CordovaPlugin {
                 callbackContext.success("WifiWizard: Enabled Multicast Lock.");            
             } else {
                 Log.d(TAG, "WifiWizard: Multicast already enabled.");  
-                callbackContext.fail("WifiWizard: Multicast already enabled.");
+                callbackContext.error("WifiWizard: Multicast already enabled.");
             }
         } else {
             if (multicastLock.isHeld()) {
@@ -79,7 +79,7 @@ public class WifiWizard extends CordovaPlugin {
                 callbackContext.success("WifiWizard: Multicast Lock Released.");            
             } else {
                 Log.d(TAG, "WifiWizard: Multicast Lock already released.");  
-                callbackContext.success("WifiWizard: Multicast Lock already released.");            
+                callbackContext.error("WifiWizard: Multicast Lock already released.");            
             }
         }
         return true;
