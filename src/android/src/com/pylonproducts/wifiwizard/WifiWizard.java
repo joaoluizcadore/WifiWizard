@@ -63,7 +63,7 @@ public class WifiWizard extends CordovaPlugin {
         MulticastLock multicastLock = wifiManager.createMulticastLock(lockName);
         this.callbackContext = callbackContext;
         if (enable) {
-            if (multicastLock.isHeld()) {
+            if (!multicastLock.isHeld()) {
                 multicastLock.setReferenceCounted(true);
                 multicastLock.acquire();
                 Log.d(TAG, "WifiWizard: Enabled Multicast Lock.");
