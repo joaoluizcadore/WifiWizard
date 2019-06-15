@@ -300,6 +300,16 @@ var WifiWizard = {
      */
     setMulticastLock: function(lockName, enable, win, fail) {
         cordova.exec(win, fail, 'WifiWizard', 'setMulticastLock', [lockName, enable]);
+    },
+
+    /**
+     *  Release Multicast
+     * @param   lockName    
+     * @param   win     callback function
+     * @param   fail    callback function
+     */
+    releaseMulticast: function(lockName, win, fail) {
+        cordova.exec(win, fail, 'WifiWizard', 'releaseMulticast', [lockName]);
     }
 };
 

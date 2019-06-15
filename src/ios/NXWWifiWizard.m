@@ -132,4 +132,8 @@
                                 callbackId:command.callbackId];
 }
 
+- (void)setMulticastLock:(CDVInvokedUrlCommand*)command {
+    
+}
+
 @end

@@ -14,5 +14,8 @@
 - (void)getConnectedBSSID:(CDVInvokedUrlCommand*)command;
 - (void)isWifiEnabled:(CDVInvokedUrlCommand*)command;
 - (void)setWifiEnabled:(CDVInvokedUrlCommand*)command;
+- (void)setMulticastLock:(CDVInvokedUrlCommand*)command;
+//private static final String SET_MULTICAST_LOCK = "setMulticastLock";
+    
 
 @end

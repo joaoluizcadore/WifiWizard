@@ -48,7 +48,8 @@ public class WifiWizard extends CordovaPlugin {
     private static final String SET_WIFI_ENABLED = "setWifiEnabled";
     private static final String TAG = "WifiWizard";
     private static final String SET_MULTICAST_LOCK = "setMulticastLock";
-    
+    private static final String RELEASE_MULTICAST = "releaseMulticast";
+        
 
     private WifiManager wifiManager;
     private CallbackContext callbackContext;
@@ -57,6 +58,14 @@ public class WifiWizard extends CordovaPlugin {
     public void initialize(CordovaInterface cordova, CordovaWebView webView) {
         super.initialize(cordova, webView);
         this.wifiManager = (WifiManager) cordova.getActivity().getSystemService(Context.WIFI_SERVICE);
+    }
+
+    public boolean setMulticastLock(CallbackContext callbackContext, String lockName) {
+        MulticastLock multicastLock = wifiManager.createMulticastLock(lockName);
+        this.callbackContext = callbackContext;
+        multicastLock.release();
+        Log.d(TAG, "WifiWizard: Multicast Lock Released.");  
+        callbackContext.success("WifiWizard: Multicast Lock Released."); 
     }
 
     public boolean setMulticastLock(CallbackContext callbackContext, String lockName, boolean enable) {
@@ -131,6 +140,9 @@ public class WifiWizard extends CordovaPlugin {
             String lockName = data.getString(0);
             boolean enabled = data.getBoolean(1);
             return this.setMulticastLock(callbackContext,lockName, enabled);
+        } else if (action.equals(RELEASE_MULTICAST)) {
+            String lockName = data.getString(0);
+            return this.releaseMulticast(callbackContext,lockName);
         } else {
             callbackContext.error("Incorrect action parameter: " + action);
         }
