@@ -66,6 +66,7 @@ public class WifiWizard extends CordovaPlugin {
         multicastLock.release();
         Log.d(TAG, "WifiWizard: Multicast Lock Released.");  
         callbackContext.success("WifiWizard: Multicast Lock Released."); 
+        return true;
     }
 
     public boolean setMulticastLock(CallbackContext callbackContext, String lockName, boolean enable) {
@@ -142,7 +143,8 @@ public class WifiWizard extends CordovaPlugin {
             return this.setMulticastLock(callbackContext,lockName, enabled);
         } else if (action.equals(RELEASE_MULTICAST)) {
             String lockName = data.getString(0);
-            return this.releaseMulticast(callbackContext,lockName);
+            //return this.releaseMulticast(callbackContext,lockName);
+            return true;
         } else {
             callbackContext.error("Incorrect action parameter: " + action);
         }
